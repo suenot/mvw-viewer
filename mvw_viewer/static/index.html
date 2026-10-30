@@ -26,6 +26,7 @@
   .vids figure { margin:0; flex:1; min-width:260px; }
   .vids video { width:100%; border-radius:8px; background:#000; }
   figcaption { color:var(--mut); font-size:12px; }
+  details { margin:8px 0; } summary { cursor:pointer; }
   pre { white-space:pre-wrap; background:var(--card); padding:10px; border-radius:8px; max-height:30vh; overflow:auto; }
   button { padding:6px 12px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--fg); cursor:pointer; font:inherit; }
   a { color:var(--acc); }
@@ -87,7 +88,10 @@ function open(i) {
       ${i.post_url ? `· <a href="${esc(i.post_url)}" target="_blank">original post</a>` : ""}
       ${i.source_url ? `· <a href="${esc(i.source_url)}" target="_blank">source</a>` : ""}</p>
     <div class="vids">${Object.entries(i.videos).map(([n, u]) => `<figure><video src="${u}" controls loop ${n === "original" ? "autoplay muted" : ""}></video><figcaption>${n}</figcaption></figure>`).join("") || "<i>no video</i>"}</div>
-    ${i.prompt ? `<p><button id="cp">Copy prompt</button></p><pre>${esc(i.prompt)}</pre>` : ""}`;
+    ${i.prompt ? `<p><button id="cp">Copy prompt</button></p><pre>${esc(i.prompt)}</pre>` : ""}
+    ${i.summary ? `<p>${esc(i.summary)}</p>` : ""}
+    ${i.how ? `<details><summary>How it was made (full page)</summary><pre>${esc(i.how)}</pre></details>` : ""}
+    ${i.style_doc ? `<details><summary>Style recipe</summary><pre>${esc(i.style_doc)}</pre></details>` : ""}`;
   d.showModal();
   $("cp")?.addEventListener("click", () => navigator.clipboard.writeText(i.prompt));
 }

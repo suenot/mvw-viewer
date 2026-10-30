@@ -21,11 +21,13 @@ def build_index(root):
         d = root / m["source"] / m["id"]
         base = f"/media/{m['source']}/{m['id']}/"
         item = {k: m.get(k) for k in ("source", "id", "title", "author", "author_url", "post_url",
-                                      "source_url", "category", "tags", "stats", "published")}
+                                      "source_url", "category", "tags", "stats", "published", "summary", "duration")}
         item["videos"] = {n.split(".")[0]: base + n for n in VIDEOS if (d / n).exists()}
         item["poster"] = next((base + n for n in POSTERS if (d / n).exists()), None)
         p = d / "prompt.txt"
         item["prompt"] = p.read_text(encoding="utf-8") if p.exists() else None
+        for f, k in (("how.md", "how"), ("style.md", "style_doc")):
+            item[k] = (d / f).read_text(encoding="utf-8") if (d / f).exists() else None
         key = m["id"] if m["source"].endswith("opus55") else m["source"] + "/" + m["id"]
         cur = merged.setdefault(key, {"sources": []})
         cur["sources"].append(m["source"])
@@ -38,7 +40,7 @@ def build_index(root):
     for cur in merged.values():
         cur["source"] = " + ".join(cur.pop("sources"))
         cur.setdefault("videos", {})
-        for k in ("prompt", "poster", "title", "author", "category"):
+        for k in ("prompt", "poster", "title", "author", "category", "how", "style_doc"):
             cur.setdefault(k, None)
         out.append(cur)
     return out
