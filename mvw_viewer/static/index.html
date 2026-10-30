@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion Videos Warehouse</title>
+<style>
+  :root { --bg:#fff; --fg:#111; --mut:#666; --card:#f4f4f5; --line:#ddd; --acc:#0a66ff; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0b0b0b; --fg:#eee; --mut:#999; --card:#181818; --line:#2a2a2a; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.4 -apple-system,system-ui,sans-serif; }
+  header { position:sticky; top:0; z-index:5; display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+           padding:10px 16px; background:var(--bg); border-bottom:1px solid var(--line); }
+  input, select { padding:6px 10px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--fg); font:inherit; }
+  input { flex:1; min-width:180px; }
+  #count { color:var(--mut); }
+  main { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px; padding:16px; }
+  .card { background:var(--card); border-radius:12px; overflow:hidden; cursor:pointer; border:1px solid var(--line); }
+  .thumb { aspect-ratio:16/9; width:100%; object-fit:cover; background:#000; display:block; }
+  .meta { padding:8px 10px; }
+  .meta b { display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .meta small { color:var(--mut); }
+  dialog { width:min(1100px,95vw); max-height:92vh; border:1px solid var(--line); border-radius:14px; background:var(--bg); color:var(--fg); padding:16px; }
+  dialog::backdrop { background:rgba(0,0,0,.7); }
+  .vids { display:flex; gap:8px; flex-wrap:wrap; }
+  .vids figure { margin:0; flex:1; min-width:260px; }
+  .vids video { width:100%; border-radius:8px; background:#000; }
+  figcaption { color:var(--mut); font-size:12px; }
+  pre { white-space:pre-wrap; background:var(--card); padding:10px; border-radius:8px; max-height:30vh; overflow:auto; }
+  button { padding:6px 12px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--fg); cursor:pointer; font:inherit; }
+  a { color:var(--acc); }
+</style>
+</head>
+<body>
+<header>
+  <input id="q" type="search" placeholder="Search title, author, prompt…">
+  <select id="src"><option value="">All sources</option></select>
+  <select id="cat"><option value="">All categories</option></select>
+  <label><input id="hasPrompt" type="checkbox" style="flex:none;min-width:0"> with prompt</label>
+  <span id="count"></span>
+</header>
+<main id="grid"></main>
+<dialog id="dlg"></dialog>
+<script>
+let items = [];
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+fetch("/api/items").then((r) => r.json()).then((d) => {
+  items = d;
+  fill("src", [...new Set(d.flatMap((i) => i.source.split(" + ")))].sort());
+  fill("cat", [...new Set(d.map((i) => i.category).filter(Boolean))].sort());
+  render();
+});
+
+function fill(id, vals) { for (const v of vals) $(id).add(new Option(v, v)); }
+
+function render() {
+  const q = $("q").value.toLowerCase(), s = $("src").value, c = $("cat").value, hp = $("hasPrompt").checked;
+  const list = items.filter((i) =>
+    (!s || i.source.split(" + ").includes(s)) && (!c || i.category === c) && (!hp || i.prompt) &&
+    (!q || [i.title, i.author, i.prompt, i.id].join(" ").toLowerCase().includes(q)));
+  $("count").textContent = list.length + " / " + items.length;
+  $("grid").innerHTML = list.slice(0, 600).map((i, n) => `
+    <div class="card" data-k="${esc(i.source)}/${esc(i.id)}">
+      <video class="thumb" ${i.poster ? `poster="${i.poster}"` : ""} ${i.videos.original ? `data-src="${i.videos.original}"` : ""} muted loop preload="none"></video>
+      <div class="meta"><b>${esc(i.title || i.id)}</b><small>${esc(i.source)}${i.author ? " · " + esc(i.author) : ""}</small></div>
+    </div>`).join("");
+}
+
+$("grid").addEventListener("mouseover", (e) => {
+  const v = e.target.closest(".card")?.querySelector("video");
+  if (v && v.dataset.src) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); }
+});
+$("grid").addEventListener("mouseout", (e) => { e.target.closest(".card")?.querySelector("video")?.pause(); });
+$("grid").addEventListener("click", (e) => {
+  const k = e.target.closest(".card")?.dataset.k;
+  if (k) open(items.find((i) => i.source + "/" + i.id === k));
+});
+["q", "src", "cat", "hasPrompt"].forEach((id) => $(id).addEventListener("input", render));
+
+function open(i) {
+  const d = $("dlg");
+  d.innerHTML = `
+    <div style="display:flex;justify-content:space-between;gap:8px"><h3 style="margin:0">${esc(i.title || i.id)}</h3><button onclick="dlg.close()">Close</button></div>
+    <p style="color:var(--mut)">${esc(i.source)} · ${esc(i.category || "")} ${i.author ? "· " + (i.author_url ? `<a href="${esc(i.author_url)}" target="_blank">${esc(i.author)}</a>` : esc(i.author)) : ""}
+      ${i.post_url ? `· <a href="${esc(i.post_url)}" target="_blank">original post</a>` : ""}
+      ${i.source_url ? `· <a href="${esc(i.source_url)}" target="_blank">source</a>` : ""}</p>
+    <div class="vids">${Object.entries(i.videos).map(([n, u]) => `<figure><video src="${u}" controls loop ${n === "original" ? "autoplay muted" : ""}></video><figcaption>${n}</figcaption></figure>`).join("") || "<i>no video</i>"}</div>
+    ${i.prompt ? `<p><button id="cp">Copy prompt</button></p><pre>${esc(i.prompt)}</pre>` : ""}`;
+  d.showModal();
+  $("cp")?.addEventListener("click", () => navigator.clipboard.writeText(i.prompt));
+}
+$("dlg").addEventListener("close", () => { $("dlg").innerHTML = ""; });
+$("dlg").addEventListener("click", (e) => { if (e.target === $("dlg")) $("dlg").close(); });
+</script>
+</body>
+</html>
