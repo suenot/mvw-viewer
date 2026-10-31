@@ -136,9 +136,17 @@ def export_static(out):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--export", metavar="DIR", help="write static site to DIR and exit")
+    ap.add_argument("--index", metavar="FILE", help="write the catalog index (items.json) to FILE and exit")
     ap.add_argument("--port", type=int, default=8765)
     ap.add_argument("--host", default="127.0.0.1")
     a = ap.parse_args()
+    if a.index:
+        out = Path(a.index)
+        tmp = out.with_suffix(".tmp")
+        items = build_index(warehouse_root())
+        tmp.write_text(json.dumps(items, ensure_ascii=False))
+        tmp.replace(out)
+        return print(f"index: {len(items)} items -> {out}")
     if a.export:
         return export_static(Path(a.export).resolve())
     print(f"warehouse: {Handler.root}\nhttp://{a.host}:{a.port}")
