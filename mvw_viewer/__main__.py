@@ -111,11 +111,36 @@ class Handler(BaseHTTPRequestHandler):
         self._send_file(target)
 
 
+def export_static(out):
+    """Write a static site: index.html, data/items.json, media/<source>/<id>/* (no server needed)."""
+    import shutil
+
+    root = warehouse_root()
+    out.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(STATIC / "index.html", out / "index.html")
+    (out / "data").mkdir(exist_ok=True)
+    items = build_index(root)
+    (out / "data" / "items.json").write_text(json.dumps(items, ensure_ascii=False))
+    for m in iter_items(root):
+        src = root / m["source"] / m["id"]
+        dst = out / "media" / m["source"] / m["id"]
+        dst.mkdir(parents=True, exist_ok=True)
+        for f in (*VIDEOS, *POSTERS):
+            if (src / f).exists():
+                shutil.copy2(src / f, dst / f)
+    (out / "vercel.json").write_text(json.dumps({"headers": [{"source": "/(.*)", "headers": [
+        {"key": "X-Robots-Tag", "value": "noindex, nofollow"}]}]}, indent=1))
+    print(f"exported {len(items)} items to {out}")
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--export", metavar="DIR", help="write static site to DIR and exit")
     ap.add_argument("--port", type=int, default=8765)
     ap.add_argument("--host", default="127.0.0.1")
     a = ap.parse_args()
+    if a.export:
+        return export_static(Path(a.export).resolve())
     print(f"warehouse: {Handler.root}\nhttp://{a.host}:{a.port}")
     ThreadingHTTPServer((a.host, a.port), Handler).serve_forever()
 

@@ -13,6 +13,7 @@
            padding:10px 16px; background:var(--bg); border-bottom:1px solid var(--line); }
   input, select { padding:6px 10px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--fg); font:inherit; }
   input { flex:1; min-width:180px; }
+  .brand { margin:0 8px 0 0; font-size:16px; font-weight:700; white-space:nowrap; }
   #count { color:var(--mut); }
   main { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px; padding:16px; }
   .card { background:var(--card); border-radius:12px; overflow:hidden; cursor:pointer; border:1px solid var(--line); }
@@ -34,6 +35,7 @@
 </head>
 <body>
 <header>
+  <h1 class="brand">Motion Videos Warehouse</h1>
   <input id="q" type="search" placeholder="Search title, author, prompt…">
   <select id="src"><option value="">All sources</option></select>
   <select id="cat"><option value="">All categories</option></select>
@@ -47,7 +49,7 @@ let items = [];
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-fetch("/api/items").then((r) => r.json()).then((d) => {
+fetch("/api/items").then((r) => r.ok ? r.json() : fetch("/data/items.json").then((r2) => r2.json())).then((d) => {
   items = d;
   fill("src", [...new Set(d.flatMap((i) => i.source.split(" + ")))].sort());
   fill("cat", [...new Set(d.map((i) => i.category).filter(Boolean))].sort());
