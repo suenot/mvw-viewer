@@ -215,3 +215,4 @@
 }
 
 .tq-prose.tq-wide { max-width: 72rem; } .tq-wide > div:not(.tq-tablewrap) > :is(h1,h2,h3,p,ul,ol) { max-width: 46rem; }
+.tq-prose { padding-left: 0; padding-right: 0; } @media (min-width: 640px) { .tq-prose { padding-left: 1rem; padding-right: 1rem; } }
