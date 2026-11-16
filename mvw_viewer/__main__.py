@@ -26,8 +26,9 @@ def build_index(root):
         item["poster"] = next((base + n for n in POSTERS if (d / n).exists()), None)
         p = d / "prompt.txt"
         item["prompt"] = p.read_text(encoding="utf-8") if p.exists() else None
+        # Long docs stay out of the index (it is downloaded on first load); the UI fetches them by URL on open.
         for f, k in (("how.md", "how"), ("style.md", "style_doc")):
-            item[k] = (d / f).read_text(encoding="utf-8") if (d / f).exists() else None
+            item[k] = base + f if (d / f).exists() else None
         key = m["id"] if m["source"].endswith("opus55") else m["source"] + "/" + m["id"]
         cur = merged.setdefault(key, {"sources": []})
         cur["sources"].append(m["source"])
