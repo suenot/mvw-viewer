@@ -15,6 +15,10 @@ const GROUPS: [string, string[]][] = [
   ["Direction and review", ["storyboard-first", "reference-by-link", "feedback-passes", "locked-message"]],
   ["Harmonic shapes", ["harmonic-morph", "harmonic-type", "shape-to-sound"]],
   ["3D and Blender", ["camera-curves", "tilt-shift", "blender-frames"]],
+  ["Timing and importance", ["motion-defaults", "importance-budget"]],
+  ["Cuts, sound and overlays", ["speed-ramp", "downbeat-cuts", "broll-treatments", "lower-third", "vertical-safe-box"]],
+  ["Drawing and diagrams", ["hand-draw-on", "progressive-diagram"]],
+  ["Colour, depth and access", ["oklch-gradients", "parallax-layers", "reduced-motion-tiers"]],
 ];
 const labelOf = (id: string) => (pages as any[]).find((p) => p.id === `technique-${id}`)?.label as string;
 

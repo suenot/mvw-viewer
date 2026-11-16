@@ -235,4 +235,88 @@ export const registry: Record<string, VizEntry> = {
     size: { wide: [640, 232], narrow: [336, 356] },
     load: () => import("./demos/blender-frames"),
   },
+  "motion-techniques/motion-defaults": {
+    title: "Motion defaults in frames and milliseconds",
+    summary:
+      "Six bars at 30 fps: opacity in 6 frames, a supporting CTA move 6, blur in 7, scale out 10, translate or scale in 12, translate out 13. Each bar shows its frames and its milliseconds.",
+    size: { wide: [640, 200], narrow: [336, 240] },
+    load: () => import("./demos/motion-defaults"),
+  },
+  "motion-techniques/importance-budget": {
+    title: "An importance level per beat",
+    summary:
+      "Eight beats rated 1, 2 or 3 and drawn as bars. Level 3 gets the most motion: 2 of 8 beats, 25 percent of the video.",
+    size: { wide: [640, 200], narrow: [336, 210] },
+    load: () => import("./demos/importance-budget"),
+  },
+  "motion-techniques/speed-ramp": {
+    title: "A speed ramp and its source-frame curve",
+    summary:
+      "Speed is 100 percent to frame 20, eases down to 25 percent at frame 28 and back to 100 percent at frame 40. The source frame is the running sum of the speed; a dot moves on that curve and a dashed line marks the impact.",
+    size: { wide: [640, 200], narrow: [336, 320] },
+    load: () => import("./demos/speed-ramp"),
+  },
+  "motion-techniques/downbeat-cuts": {
+    title: "Cuts on the downbeat, and what makes a hit",
+    summary:
+      "A strip of scenes of 2, 2 and 4 bars with cuts on bar starts, and four loudness jumps against a 6 dB threshold: an accent on the cut, kick and bass together, layers a bar apart, a chord change.",
+    size: { wide: [640, 230], narrow: [336, 320] },
+    load: () => import("./demos/downbeat-cuts"),
+  },
+  "motion-techniques/broll-treatments": {
+    title: "A B-roll treatment plan and its timing",
+    summary:
+      "A 26 second strip of treatments A, B and C (A4 B5 A5 C5 A3 B2 A2 seconds) and the timing of a data overlay: axes lead by about 6 frames, the value lands on the spoken word, the answer waits.",
+    size: { wide: [640, 236], narrow: [336, 236] },
+    load: () => import("./demos/broll-treatments"),
+  },
+  "motion-techniques/lower-third": {
+    title: "A lower third: safe area and timing",
+    summary:
+      "A 16:9 frame with a dashed title-safe line and a strap that slides in, and the clip timeline: lead 0.2 s, in 0.8 s, hold 5.5 s, out 0.5 s, tail 0.2 s.",
+    size: { wide: [640, 210], narrow: [336, 300] },
+    load: () => import("./demos/lower-third"),
+  },
+  "motion-techniques/hand-draw-on": {
+    title: "A hand draw-on with a pen on the point",
+    summary:
+      "Two strokes drawn as 30 line pieces each, a pen glued to the newest point that lifts and moves unseen between strokes.",
+    size: { wide: [640, 200], narrow: [336, 260] },
+    load: () => import("./demos/hand-draw-on"),
+  },
+  "motion-techniques/progressive-diagram": {
+    title: "Reveal order for a flow diagram",
+    summary:
+      "Nodes first, then the edges with a dot travelling along them, then the labels; last, the active node keeps full strength and the others dim to 35 percent.",
+    size: { wide: [640, 200], narrow: [336, 210] },
+    load: () => import("./demos/progressive-diagram"),
+  },
+  "motion-techniques/oklch-gradients": {
+    title: "The same two colours, mixed in sRGB and in OKLCH",
+    summary:
+      "Blue to amber in 40 stripes, blended two ways, with a line under each bar that plots the chroma of every stripe. The sRGB mix dips toward grey in the middle; the OKLCH mix keeps the chroma.",
+    size: { wide: [640, 200], narrow: [336, 220] },
+    load: () => import("./demos/oklch-gradients"),
+  },
+  "motion-techniques/parallax-layers": {
+    title: "Parallax: three layers at three speeds",
+    summary:
+      "One camera pan of 100 units. The background follows at 0.2x, the midground at 0.6x and the foreground at 1.2x, inside a clipped frame.",
+    size: { wide: [640, 190], narrow: [336, 316] },
+    load: () => import("./demos/parallax-layers"),
+  },
+  "motion-techniques/reduced-motion-tiers": {
+    title: "Reduced motion in three tiers",
+    summary:
+      "Three rows, each with the normal and the reduced version: remove the big slide, soften a slide to a 150 ms fade, keep a colour fade.",
+    size: { wide: [640, 200], narrow: [336, 300] },
+    load: () => import("./demos/reduced-motion-tiers"),
+  },
+  "motion-techniques/vertical-safe-box": {
+    title: "A vertical frame and its safe box",
+    summary:
+      "A 1080 by 1920 frame with clear bands of 120 px at the top, 320 px at the bottom and 120 px on the right, and a dashed 900 by 1400 box that dips 60 px into the bottom band.",
+    size: { wide: [640, 210], narrow: [336, 320] },
+    load: () => import("./demos/vertical-safe-box"),
+  },
 };

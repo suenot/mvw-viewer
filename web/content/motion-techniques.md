@@ -3,20 +3,20 @@ title: "Motion techniques Claude can use"
 label: "Motion techniques"
 order: 8
 parent: "guides/video-creation-study"
-summary: "Thirty-two motion-design techniques from the studied tutorials, the prompt database, the owner's curves project and our own 3D work, one article each with an animated demo of how it works."
+summary: "Forty-four motion-design techniques from the studied tutorials, the prompt database, the owner's curves project, our own 3D work and a read-through of skill repositories, one article each with an animated demo of how it works."
 ---
 
 # Motion techniques Claude can use
 
 [Video creation studies](video-creation-study.md) · Reviewed November 16, 2026
 
-This is the practical side of the studies: each technique the tutorials describe, pulled out as its own article with a small animated demo, so an assistant (or a person) can apply it one at a time. The main source is ProdAdvice's HyperFrames tutorial ([K1Mr5_7Gm3g](https://www.youtube.com/watch?v=K1Mr5_7Gm3g)); we add the two other tutorials the owner picked, Studio Igor's game-art experiments ([YQ01D9xGAnk](https://www.youtube.com/watch?v=YQ01D9xGAnk)) and Andrey Zenin's 2D video plugin tutorial ([YyUP_hSovOg](https://www.youtube.com/watch?v=YyUP_hSovOg)). The second wave of techniques comes from a fourth tutorial found in the chat history, ИИ МАСТОДОНТ's "Sonnet 5.5 and HyperFrames" ([yEpN_s9UkAE](https://www.youtube.com/watch?v=yEpN_s9UkAE)), and from the prompts in this site's own Videos catalog, mainly the detailed ones by flxrnc, techhalla and 0xnicc0 (their authors' X posts are linked in each article). The third wave comes from the owner's curves project (harmonic shapes, letters and sound, accumulated clocks) and from 3D work: our Tabletop Miniature style and a small Blender test we ran. We read the transcript and the prompts; we have not rerun them.
+This is the practical side of the studies: each technique the tutorials describe, pulled out as its own article with a small animated demo, so an assistant (or a person) can apply it one at a time. The main source is ProdAdvice's HyperFrames tutorial ([K1Mr5_7Gm3g](https://www.youtube.com/watch?v=K1Mr5_7Gm3g)); we add the two other tutorials the owner picked, Studio Igor's game-art experiments ([YQ01D9xGAnk](https://www.youtube.com/watch?v=YQ01D9xGAnk)) and Andrey Zenin's 2D video plugin tutorial ([YyUP_hSovOg](https://www.youtube.com/watch?v=YyUP_hSovOg)). The second wave of techniques comes from a fourth tutorial found in the chat history, ИИ МАСТОДОНТ's "Sonnet 5.5 and HyperFrames" ([yEpN_s9UkAE](https://www.youtube.com/watch?v=yEpN_s9UkAE)), and from the prompts in this site's own Videos catalog, mainly the detailed ones by flxrnc, techhalla and 0xnicc0 (their authors' X posts are linked in each article). The third wave comes from the owner's curves project (harmonic shapes, letters and sound, accumulated clocks) and from 3D work: our Tabletop Miniature style and a small Blender test we ran. The fourth wave comes from reading the skill repositories listed on the [skills page](motion-skills-list.md) (we cloned them into a temporary folder and read the files as data, running nothing): motion defaults, an importance budget, speed ramps, downbeat cuts, B-roll treatments, lower thirds, a drawing hand, diagrams, OKLCH gradients, parallax, reduced motion and the vertical safe box. We read the transcripts, the prompts and the skills; we have not rerun them.
 
 The skills these techniques can be pulled from, with repository links, are on [Motion skills: where to extract the techniques](motion-skills-list.md).
 
 ```viz kit/steps
-{"caption": "The eight groups of techniques: how the drawing looks, how the work is organised, how picture and voice meet, how motion is engineered, how type moves, how the work is directed and reviewed, how shapes become harmonics, and how 3D is used.",
- "summary": "Eight groups. The pencil look: line boil, cadence and seed, hatching, construction lines. The workflow: timing plan, style contract, render and inspect, error log, short pieces. Picture and voice: layered assets, one sentence one shot, number readout. Motion engineering: seekable frame, closed-form springs, beat grid, seamless loop, subframe blur, one shape, independent clocks. Type and print: kinetic type, mask reveal, misregistration. Direction and review: storyboard and pre-pass, reference by link, feedback passes, locked message. Harmonic shapes: harmonic morph, harmonic type, shape to sound. 3D and Blender: camera curves, tilt-shift band, Blender frames.",
+{"caption": "The twelve groups of techniques: how the drawing looks, how the work is organised, how picture and voice meet, how motion is engineered, how type moves, how the work is directed and reviewed, how shapes become harmonics, how 3D is used, and four groups from the skill repositories: timing and importance, cuts and overlays, drawing and diagrams, colour, depth and access.",
+ "summary": "Twelve groups. The pencil look: line boil, cadence and seed, hatching, construction lines. The workflow: timing plan, style contract, render and inspect, error log, short pieces. Picture and voice: layered assets, one sentence one shot, number readout. Motion engineering: seekable frame, closed-form springs, beat grid, seamless loop, subframe blur, one shape, independent clocks. Type and print: kinetic type, mask reveal, misregistration. Direction and review: storyboard and pre-pass, reference by link, feedback passes, locked message. Harmonic shapes: harmonic morph, harmonic type, shape to sound. 3D and Blender: camera curves, tilt-shift band, Blender frames. Timing and importance: motion defaults, importance budget. Cuts, sound and overlays: speed ramp, downbeat cuts, B-roll treatments, lower third, vertical safe box. Drawing and diagrams: hand draw-on, progressive diagram. Colour, depth and access: OKLCH gradients, parallax layers, reduced motion tiers.",
  "steps": [
   {"title": "Pencil look", "text": "Line boil, cadence and seed, hatching, construction lines"},
   {"title": "Workflow", "text": "Timing plan, style contract, render and inspect, error log, short pieces"},
@@ -25,7 +25,11 @@ The skills these techniques can be pulled from, with repository links, are on [M
   {"title": "Type and print", "text": "Kinetic type, mask reveal, misregistration"},
   {"title": "Direction and review", "text": "Storyboard and pre-pass, reference by link, feedback passes, locked message"},
   {"title": "Harmonic shapes", "text": "Harmonic morph, harmonic type, shape to sound"},
-  {"title": "3D and Blender", "text": "Camera curves, tilt-shift band, Blender frames"}
+  {"title": "3D and Blender", "text": "Camera curves, tilt-shift band, Blender frames"},
+  {"title": "Timing and importance", "text": "Motion defaults, importance budget"},
+  {"title": "Cuts and overlays", "text": "Speed ramp, downbeat cuts, B-roll, lower third, safe box"},
+  {"title": "Drawing and diagrams", "text": "Hand draw-on, progressive diagram"},
+  {"title": "Colour, depth, access", "text": "OKLCH gradients, parallax, reduced motion"}
  ]}
 ```
 
@@ -103,6 +107,38 @@ The skills these techniques can be pulled from, with repository links, are on [M
 | [Tilt-shift band](technique-tilt-shift.md) | Blurs all but one band so a scene reads as a miniature; grain seeded by frame number | Our Tabletop Miniature style |
 | [Blender frames](technique-blender-frames.md) | Scripts a headless Blender animation and renders each frame from its number | Our own test, Blender 5.2.2 |
 
+### Timing and importance
+
+| Technique | What it does | Main source |
+| --- | --- | --- |
+| [Motion defaults](technique-motion-defaults.md) | Gives a default length in frames to each kind of move: opacity 6, entrance 12, blur 7, exit 10 to 13 | motionmaxxing |
+| [Importance budget](technique-importance-budget.md) | Rates every beat 1 to 3 and lets at most a quarter be 3 | motionmaxxing |
+
+### Cuts, sound and overlays
+
+| Technique | What it does | Main source |
+| --- | --- | --- |
+| [Speed ramp](technique-speed-ramp.md) | Slows into an impact and snaps back, as a time remap whose slowest frame lands on the beat | iart-ai motion-design-skills |
+| [Downbeat cuts](technique-downbeat-cuts.md) | Scenes of whole bars, cuts marked by a chord change, not by a loud accent | iart-ai javascript-animation-skills |
+| [B-roll treatments](technique-broll-treatments.md) | Speaker, overlay or cover per line, and lead, sync or wait per element | iart-ai b-roll-skills |
+| [Lower third](technique-lower-third.md) | A name strap inside title-safe, moving only while it builds in and out | iart-ai lower-thirds-skills |
+| [Vertical safe box](technique-vertical-safe-box.md) | Keeps the hook inside a 900 by 1400 box and the bottom 320 px clear | iart-ai tiktok-video-skills |
+
+### Drawing and diagrams
+
+| Technique | What it does | Main source |
+| --- | --- | --- |
+| [Hand draw-on](technique-hand-draw-on.md) | Draws a stroke and keeps the pen on its tip from one progress value | iart-ai explainer-video-skills |
+| [Progressive diagram](technique-progressive-diagram.md) | Reveals nodes, then edges, then labels, then dims all but the active node | iart-ai explainer-video-skills |
+
+### Colour, depth and access
+
+| Technique | What it does | Main source |
+| --- | --- | --- |
+| [OKLCH gradients](technique-oklch-gradients.md) | Blends colours in a perceptual space so the middle keeps its chroma | iart-ai motion-design-skills |
+| [Parallax layers](technique-parallax-layers.md) | Moves three depth layers at 0.2x, 0.6x and 1.2x of one camera pan | iart-ai motion-design-skills |
+| [Reduced motion tiers](technique-reduced-motion-tiers.md) | Removes vestibular triggers, softens the rest to a fade, keeps colour and progress | iart-ai web-animation-skills |
+
 ## How to use them
 
 1. Start from the workflow group: a [timing plan](technique-timing-plan.md) and a [style contract](technique-style-contract.md) cost minutes and prevent most rework.
@@ -111,9 +147,10 @@ The skills these techniques can be pulled from, with repository links, are on [M
 4. For narrated pieces add the picture-and-voice group.
 5. For product and UI motion, or pieces that loop or go to music, add the motion-engineering group ([seekable frame](technique-seekable-frame.md) first) and the direction-and-review group.
 6. For character and shape work add the harmonic group; for 3D scenes, the 3D group (the Blender article is a measured test, the others come from a finished style).
+7. For short-form and talking-head work add the cuts-and-overlays group, and set [motion defaults](technique-motion-defaults.md) and an [importance budget](technique-importance-budget.md) before animating. Always plan a [reduced-motion](technique-reduced-motion-tiers.md) version of anything that slides, zooms or moves in depth.
 
 ## Limits
 
-The demos are our own drawings that show how each mechanism works. They are not frames from the tutorials, and the numbers inside them (amplitudes, spacings, pixel shifts) are illustrative unless an article says a number comes from a source. The code snippets are our proposed implementations; none of the four tutorials publishes its source, and the prompts in the catalog are given without their code. A technique that works in a demo has to be tested on a real scene, with the checks in [Auditing a video](auditing-a-video.md), before it enters a client video.
+The demos are our own drawings that show how each mechanism works. They are not frames from the tutorials, and the numbers inside them (amplitudes, spacings, pixel shifts) are illustrative unless an article says a number comes from a source. The code snippets are our proposed implementations and were not run; none of the four tutorials publishes its source, and the prompts in the catalog are given without their code. Numbers in the fourth wave (frames, decibels, pixels) are the skills' own claims, not remeasured by us. A technique that works in a demo has to be tested on a real scene, with the checks in [Auditing a video](auditing-a-video.md), before it enters a client video.
 
 Studies behind this page: [HyperFrames tutorial study](hyperframes-tutorial-study.md), [Layered art tutorial study](layered-art-to-video.md), [Reference: 2D video plugin](reference-claude-2d-video-plugin.md), [Skill trial: bond Short](skill-trial-bond-short.md).
