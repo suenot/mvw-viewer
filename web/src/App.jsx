@@ -74,6 +74,7 @@ function Details({ item }) {
 export default function App() {
   const [items, setItems] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   const [q, setQ] = useState("");
   const [src, setSrc] = useState(ALL);
   const [cat, setCat] = useState(ALL);
@@ -81,7 +82,7 @@ export default function App() {
   const [shown, setShown] = useState(PAGE);
   const [open, setOpen] = useState(null);
 
-  useEffect(() => { loadItems().then(setItems).catch((e) => setError(String(e))); }, []);
+  useEffect(() => { loadItems().then(setItems).catch((e) => setError(String(e))).finally(() => setLoading(false)); }, []);
   useEffect(() => setShown(PAGE), [q, src, cat, withPrompt]);
 
   const srcOptions = useMemo(() => [...new Set(items.flatMap(sources))].sort(), [items]);
@@ -119,6 +120,7 @@ export default function App() {
           ))}
         </nav>
       </header>
+      {loading && <p className="p-4 text-sm text-muted-foreground">Loading catalog…</p>}
       {error && <p className="p-4 text-sm text-red-500">{error}</p>}
       <main className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3 p-4">
         {list.slice(0, shown).map((i) => <Card key={i.source + i.id} item={i} onOpen={setOpen} />)}
