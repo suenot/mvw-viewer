@@ -26,3 +26,13 @@
   * { @apply border-border; }
   body { @apply bg-background text-foreground antialiased; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
 }
+
+@layer components {
+  /* Native select with a single custom chevron, same height/padding as the text input. */
+  .select {
+    appearance: none; -webkit-appearance: none; padding-right: 2.25rem; cursor: pointer;
+    background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  }
+  .select:hover { @apply bg-accent; }
+}

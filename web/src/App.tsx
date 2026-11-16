@@ -1,18 +1,7 @@
 import { For, Show, createEffect, createMemo, createResource, createSignal } from "solid-js";
 import { loadItems, loadText, url } from "./lib";
 
-const GH = "https://github.com/suenot/";
-// Every repo the warehouse is built from; one GitHub icon-link each in the header.
-const REPOS: [string, string][] = [
-  ["mvw-core", "Shared layout + downloader"],
-  ["mvw-parser-awesome-opus55", "Parser: awesome-opus5-5-videos"],
-  ["mvw-parser-skillry-opus55", "Parser: skillry.dev"],
-  ["mvw-parser-higgsfield-content-factory", "Parser: higgsfield content-factory"],
-  ["mvw-importer-local", "Importer: local mp4+jpg folders"],
-  ["mvw-viewer", "This viewer"],
-  ["mvw-deploy", "Server stack (nginx + daily parsers)"],
-  ["production-warehouse", "Built static site"],
-];
+const WORKSPACE = "https://github.com/suenot/motion-videos-warehouse"; // root repo; every source repo is a git submodule of it
 
 const ALL = "__all__";
 const PAGE = 120;
@@ -124,11 +113,11 @@ export default function App() {
           value={q()} onInput={(e) => setQ(e.currentTarget.value)} placeholder="Search title, author, prompt…"
           class={`${field} min-w-[200px] flex-1`}
         />
-        <select class={`${field} min-w-[10rem]`} value={src()} onChange={(e) => setSrc(e.currentTarget.value)}>
+        <select class={`${field} select min-w-[10rem]`} value={src()} onChange={(e) => setSrc(e.currentTarget.value)}>
           <option value={ALL}>All sources</option>
           <For each={srcOptions()}>{(s) => <option value={s}>{s}</option>}</For>
         </select>
-        <select class={`${field} min-w-[10rem]`} value={cat()} onChange={(e) => setCat(e.currentTarget.value)}>
+        <select class={`${field} select min-w-[10rem]`} value={cat()} onChange={(e) => setCat(e.currentTarget.value)}>
           <option value={ALL}>All categories</option>
           <For each={catOptions()}>{(s) => <option value={s}>{s}</option>}</For>
         </select>
@@ -136,16 +125,10 @@ export default function App() {
           <input type="checkbox" class="h-4 w-4 accent-primary" checked={withPrompt()} onChange={(e) => setWithPrompt(e.currentTarget.checked)} />with prompt
         </label>
         <span class="text-sm text-muted-foreground">{list().length} / {items().length}</span>
-        <nav aria-label="Source repositories" class="ml-auto flex items-center gap-1">
-          <For each={REPOS}>
-            {([name, desc]) => (
-              <a href={GH + name} target="_blank" rel="noreferrer" title={`${name}: ${desc}`} aria-label={name}
-                class="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
-                <GithubIcon />
-              </a>
-            )}
-          </For>
-        </nav>
+        <a href={WORKSPACE} target="_blank" rel="noreferrer" title="Source: motion-videos-warehouse (all repos as submodules)" aria-label="GitHub"
+          class="ml-auto rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+          <GithubIcon />
+        </a>
       </header>
       <Show when={data.loading}><p class="p-4 text-sm text-muted-foreground">Loading catalog…</p></Show>
       <Show when={data.error}><p class="p-4 text-sm text-red-500">{String(data.error)}</p></Show>
