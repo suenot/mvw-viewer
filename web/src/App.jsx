@@ -1,7 +1,20 @@
 import { useEffect, useMemo, useState } from "react";
-import { Copy, Search } from "lucide-react";
+import { Copy, Github, Search } from "lucide-react";
 import { Button, Checkbox, Dialog, DialogContent, Select } from "./components/ui";
 import { loadItems, url } from "./lib";
+
+const GH = "https://github.com/suenot/";
+// Every repo the warehouse is built from; one GitHub icon-link each in the header.
+const REPOS = [
+  ["mvw-core", "Shared layout + downloader"],
+  ["mvw-parser-awesome-opus55", "Parser: awesome-opus5-5-videos"],
+  ["mvw-parser-skillry-opus55", "Parser: skillry.dev"],
+  ["mvw-parser-higgsfield-content-factory", "Parser: higgsfield content-factory"],
+  ["mvw-importer-local", "Importer: local mp4+jpg folders"],
+  ["mvw-viewer", "This viewer"],
+  ["mvw-deploy", "Server stack (nginx + daily parsers)"],
+  ["production-warehouse", "Built static site"],
+];
 
 const ALL = "__all__";
 const PAGE = 120;
@@ -95,6 +108,16 @@ export default function App() {
         <Select value={cat} onValueChange={setCat} placeholder="Category" options={[{ value: ALL, label: "All categories" }, ...catOptions.map((s) => ({ value: s, label: s }))]} />
         <label className="flex items-center gap-2 text-sm"><Checkbox checked={withPrompt} onCheckedChange={(v) => setWithPrompt(v === true)} />with prompt</label>
         <span className="text-sm text-muted-foreground">{list.length} / {items.length}</span>
+        <nav aria-label="Source repositories" className="ml-auto flex items-center gap-1">
+          {REPOS.map(([name, desc]) => (
+            <a
+              key={name} href={GH + name} target="_blank" rel="noreferrer" title={`${name}: ${desc}`} aria-label={name}
+              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+          ))}
+        </nav>
       </header>
       {error && <p className="p-4 text-sm text-red-500">{error}</p>}
       <main className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3 p-4">
