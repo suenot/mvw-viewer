@@ -10,6 +10,9 @@ const GROUPS: [string, string[]][] = [
   ["The pencil look", ["line-boil", "cadence-and-seed", "hatching", "construction-lines"]],
   ["The workflow", ["timing-plan", "style-contract", "render-and-inspect", "error-log", "assemble-from-pieces"]],
   ["Picture and voice", ["layered-assets", "sentence-shot", "number-readout"]],
+  ["Motion engineering", ["seekable-frame", "closed-form-springs", "beat-grid", "seamless-loop", "subframe-blur", "one-shape"]],
+  ["Type and print", ["kinetic-type", "mask-reveal", "misregistration"]],
+  ["Direction and review", ["storyboard-first", "reference-by-link", "feedback-passes", "locked-message"]],
 ];
 const labelOf = (id: string) => (pages as any[]).find((p) => p.id === `technique-${id}`)?.label as string;
 
