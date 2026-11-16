@@ -1,5 +1,7 @@
-import { For, Show, createEffect, createMemo, createResource, createSignal } from "solid-js";
+import { For, Show, createEffect, createMemo, createResource, createSignal, lazy, onCleanup } from "solid-js";
 import { loadItems, loadText, url } from "./lib";
+
+const Pages = lazy(() => import("./techniques/Pages")); // techniques + skills pages: own chunk, not loaded with the catalog
 
 const WORKSPACE = "https://github.com/suenot/motion-videos-warehouse"; // root repo; every source repo is a git submodule of it
 
@@ -82,9 +84,24 @@ function Details(props: { item: any }) {
   );
 }
 
+const TABS = [["#/", "Videos"], ["#/techniques", "Techniques"], ["#/skills", "Skills"]] as const;
+
+function useRoute() {
+  const read = () => location.hash.replace(/^#\/?/, "/") || "/";
+  const [route, setRoute] = createSignal(read());
+  const on = () => { setRoute(read()); window.scrollTo(0, 0); };
+  window.addEventListener("hashchange", on);
+  window.addEventListener("popstate", on);
+  onCleanup(() => { window.removeEventListener("hashchange", on); window.removeEventListener("popstate", on); });
+  return route;
+}
+
 export default function App() {
+  const route = useRoute();
+  const videos = () => route() === "/";
+  const tab = (href: string) => (href === "#/" ? videos() : route() === href.slice(1) || route().startsWith(href.slice(1) + "/"));
   const [data] = createResource<any[]>(loadItems);
-  const items = () => data() ?? [];
+  const items = () => (data.error ? [] : data() ?? []); // reading data() of a failed resource throws
   const [q, setQ] = createSignal("");
   const [src, setSrc] = createSignal(ALL);
   const [cat, setCat] = createSignal(ALL);
@@ -109,6 +126,13 @@ export default function App() {
     <div class="min-h-screen">
       <header class="sticky top-0 z-30 flex flex-wrap items-center gap-3 border-b bg-background/95 px-4 py-3 backdrop-blur">
         <h1 class="mr-2 whitespace-nowrap text-base font-semibold tracking-tight">Production Warehouse</h1>
+        <nav class="flex gap-1" aria-label="Sections">
+          <For each={TABS}>{([href, label]) => (
+            <a href={href} aria-current={tab(href) ? "page" : undefined}
+              class={`rounded-md px-3 py-1.5 text-sm transition-colors ${tab(href) ? "bg-accent font-medium text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}>{label}</a>
+          )}</For>
+        </nav>
+        <Show when={videos()}><>
         <input
           value={q()} onInput={(e) => setQ(e.currentTarget.value)} placeholder="Search title, author, prompt…"
           class={`${field} min-w-[200px] flex-1`}
@@ -125,11 +149,14 @@ export default function App() {
           <input type="checkbox" class="h-4 w-4 accent-primary" checked={withPrompt()} onChange={(e) => setWithPrompt(e.currentTarget.checked)} />with prompt
         </label>
         <span class="text-sm text-muted-foreground">{list().length} / {items().length}</span>
+        </></Show>
         <a href={WORKSPACE} target="_blank" rel="noreferrer" title="Source: motion-videos-warehouse (all repos as submodules)" aria-label="GitHub"
           class="ml-auto rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
           <GithubIcon />
         </a>
       </header>
+      <Show when={!videos()}><Pages route={"#" + route()} /></Show>
+      <Show when={videos()}><>
       <Show when={data.loading}><p class="p-4 text-sm text-muted-foreground">Loading catalog…</p></Show>
       <Show when={data.error}><p class="p-4 text-sm text-red-500">{String(data.error)}</p></Show>
       <main class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3 p-4">
@@ -137,6 +164,8 @@ export default function App() {
       </main>
       <Show when={shown() < list().length}>
         <div class="flex justify-center pb-8"><button class={btn} onClick={() => setShown((n) => n + PAGE)}>Show more ({list().length - shown()})</button></div>
+      </Show>
+      </>
       </Show>
       <dialog
         ref={dlg} onClose={() => setOpen(null)}
