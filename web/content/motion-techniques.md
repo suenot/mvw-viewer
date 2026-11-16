@@ -3,27 +3,29 @@ title: "Motion techniques Claude can use"
 label: "Motion techniques"
 order: 8
 parent: "guides/video-creation-study"
-summary: "Twenty-five motion-design techniques from the studied tutorials and from the prompt database, one article each with an animated demo of how it works."
+summary: "Thirty-two motion-design techniques from the studied tutorials, the prompt database, the owner's curves project and our own 3D work, one article each with an animated demo of how it works."
 ---
 
 # Motion techniques Claude can use
 
 [Video creation studies](video-creation-study.md) · Reviewed November 16, 2026
 
-This is the practical side of the studies: each technique the tutorials describe, pulled out as its own article with a small animated demo, so an assistant (or a person) can apply it one at a time. The main source is ProdAdvice's HyperFrames tutorial ([K1Mr5_7Gm3g](https://www.youtube.com/watch?v=K1Mr5_7Gm3g)); we add the two other tutorials the owner picked, Studio Igor's game-art experiments ([YQ01D9xGAnk](https://www.youtube.com/watch?v=YQ01D9xGAnk)) and Andrey Zenin's 2D video plugin tutorial ([YyUP_hSovOg](https://www.youtube.com/watch?v=YyUP_hSovOg)). The second wave of techniques comes from a fourth tutorial found in the chat history, ИИ МАСТОДОНТ's "Sonnet 5.5 and HyperFrames" ([yEpN_s9UkAE](https://www.youtube.com/watch?v=yEpN_s9UkAE)), and from the prompts in this site's own Videos catalog, mainly the detailed ones by flxrnc, techhalla and 0xnicc0 (their authors' X posts are linked in each article). We read the transcript and the prompts; we have not rerun them.
+This is the practical side of the studies: each technique the tutorials describe, pulled out as its own article with a small animated demo, so an assistant (or a person) can apply it one at a time. The main source is ProdAdvice's HyperFrames tutorial ([K1Mr5_7Gm3g](https://www.youtube.com/watch?v=K1Mr5_7Gm3g)); we add the two other tutorials the owner picked, Studio Igor's game-art experiments ([YQ01D9xGAnk](https://www.youtube.com/watch?v=YQ01D9xGAnk)) and Andrey Zenin's 2D video plugin tutorial ([YyUP_hSovOg](https://www.youtube.com/watch?v=YyUP_hSovOg)). The second wave of techniques comes from a fourth tutorial found in the chat history, ИИ МАСТОДОНТ's "Sonnet 5.5 and HyperFrames" ([yEpN_s9UkAE](https://www.youtube.com/watch?v=yEpN_s9UkAE)), and from the prompts in this site's own Videos catalog, mainly the detailed ones by flxrnc, techhalla and 0xnicc0 (their authors' X posts are linked in each article). The third wave comes from the owner's curves project (harmonic shapes, letters and sound, accumulated clocks) and from 3D work: our Tabletop Miniature style and a small Blender test we ran. We read the transcript and the prompts; we have not rerun them.
 
 The skills these techniques can be pulled from, with repository links, are on [Motion skills: where to extract the techniques](motion-skills-list.md).
 
 ```viz kit/steps
-{"caption": "The six groups of techniques: how the drawing looks, how the work is organised, how picture and voice meet, how motion is engineered, how type moves, and how the work is directed and reviewed.",
- "summary": "Six groups. The pencil look: line boil, cadence and seed, hatching, construction lines. The workflow: timing plan, style contract, render and inspect, error log, short pieces. Picture and voice: layered assets, one sentence one shot, number readout. Motion engineering: seekable frame, closed-form springs, beat grid, seamless loop, subframe blur, one shape. Type and print: kinetic type, mask reveal, misregistration. Direction and review: storyboard and pre-pass, reference by link, feedback passes, locked message.",
+{"caption": "The eight groups of techniques: how the drawing looks, how the work is organised, how picture and voice meet, how motion is engineered, how type moves, how the work is directed and reviewed, how shapes become harmonics, and how 3D is used.",
+ "summary": "Eight groups. The pencil look: line boil, cadence and seed, hatching, construction lines. The workflow: timing plan, style contract, render and inspect, error log, short pieces. Picture and voice: layered assets, one sentence one shot, number readout. Motion engineering: seekable frame, closed-form springs, beat grid, seamless loop, subframe blur, one shape, independent clocks. Type and print: kinetic type, mask reveal, misregistration. Direction and review: storyboard and pre-pass, reference by link, feedback passes, locked message. Harmonic shapes: harmonic morph, harmonic type, shape to sound. 3D and Blender: camera curves, tilt-shift band, Blender frames.",
  "steps": [
   {"title": "Pencil look", "text": "Line boil, cadence and seed, hatching, construction lines"},
   {"title": "Workflow", "text": "Timing plan, style contract, render and inspect, error log, short pieces"},
   {"title": "Picture and voice", "text": "Layered assets, one sentence one shot, number readout"},
-  {"title": "Motion engineering", "text": "Seekable frame, springs, beat grid, loop, subframe blur, one shape"},
+  {"title": "Motion engineering", "text": "Seekable frame, springs, beat grid, loop, subframe blur, one shape, clocks"},
   {"title": "Type and print", "text": "Kinetic type, mask reveal, misregistration"},
-  {"title": "Direction and review", "text": "Storyboard and pre-pass, reference by link, feedback passes, locked message"}
+  {"title": "Direction and review", "text": "Storyboard and pre-pass, reference by link, feedback passes, locked message"},
+  {"title": "Harmonic shapes", "text": "Harmonic morph, harmonic type, shape to sound"},
+  {"title": "3D and Blender", "text": "Camera curves, tilt-shift band, Blender frames"}
  ]}
 ```
 
@@ -66,6 +68,7 @@ The skills these techniques can be pulled from, with repository links, are on [M
 | [Seamless loop](technique-seamless-loop.md) | Makes the last frame equal the first, cursor included | Prompts flxrnc, techhalla |
 | [Subframe blur](technique-subframe-blur.md) | Blends four samples per frame for real motion blur | Prompts flxrnc, techhalla |
 | [One shape, never cut](technique-one-shape.md) | Tells a product story with one element that morphs, with no cuts | Prompts AnnaCher, 0xnicc0, flxrnc |
+| [Independent clocks](technique-independent-clocks.md) | Gives each motion its own accumulated phase, so a speed change never moves the past | The owner's curves project |
 
 ### Type and print
 
@@ -84,6 +87,22 @@ The skills these techniques can be pulled from, with repository links, are on [M
 | [Feedback in passes](technique-feedback-passes.md) | Pace, then sound, then music fitted to the beat | ИИ МАСТОДОНТ 08:13 |
 | [Locked message and bans](technique-locked-message.md) | Fixes the exact words and lists what must not appear | Prompt techhalla |
 
+### Harmonic shapes
+
+| Technique | What it does | Main source |
+| --- | --- | --- |
+| [Harmonic morph](technique-harmonic-morph.md) | Stores an outline as a few complex harmonics; morphs by mixing coefficients; the count is a smoothness dial | The owner's curves project |
+| [Harmonic type](technique-harmonic-type.md) | Builds letters from closed contours, filled as one even-odd compound path so holes stay open | The owner's curves project |
+| [Shape to sound](technique-shape-to-sound.md) | Uses the magnitudes of a contour's harmonics as the partials of a tone | The owner's curves project |
+
+### 3D and Blender
+
+| Technique | What it does | Main source |
+| --- | --- | --- |
+| [Camera curves](technique-camera-curves.md) | Keys a 3D camera's channels with monotone Hermite curves: smooth, no overshoot, flat on holds | Our Tabletop Miniature style |
+| [Tilt-shift band](technique-tilt-shift.md) | Blurs all but one band so a scene reads as a miniature; grain seeded by frame number | Our Tabletop Miniature style |
+| [Blender frames](technique-blender-frames.md) | Scripts a headless Blender animation and renders each frame from its number | Our own test, Blender 5.2.2 |
+
 ## How to use them
 
 1. Start from the workflow group: a [timing plan](technique-timing-plan.md) and a [style contract](technique-style-contract.md) cost minutes and prevent most rework.
@@ -91,6 +110,7 @@ The skills these techniques can be pulled from, with repository links, are on [M
 3. Run [render and inspect](technique-render-and-inspect.md) on every scene, and keep the [error log](technique-error-log.md) current.
 4. For narrated pieces add the picture-and-voice group.
 5. For product and UI motion, or pieces that loop or go to music, add the motion-engineering group ([seekable frame](technique-seekable-frame.md) first) and the direction-and-review group.
+6. For character and shape work add the harmonic group; for 3D scenes, the 3D group (the Blender article is a measured test, the others come from a finished style).
 
 ## Limits
 

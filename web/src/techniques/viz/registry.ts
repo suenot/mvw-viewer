@@ -186,4 +186,53 @@ export const registry: Record<string, VizEntry> = {
     size: { wide: [640, 232], narrow: [336, 268] },
     load: () => import("./demos/cadence"),
   },
+  "motion-techniques/harmonic-morph": {
+    title: "A shape morphing as harmonics, and the harmonic budget",
+    summary:
+      "A five-pointed star becomes a house by mixing the coefficients of 12 harmonics from alpha 0 to 1, drawn as 14 in-between outlines. Beside it the same star rebuilt from 2, 6 and 24 harmonics: few give a soft blob, many bring the corners back.",
+    size: { wide: [640, 214], narrow: [336, 330] },
+    load: () => import("./demos/harmonic-morph"),
+  },
+  "motion-techniques/harmonic-type": {
+    title: "Letters as compound harmonic contours",
+    summary:
+      "The letters O and A, each made of an outer and an inner contour rebuilt from 16 harmonics. With the non-zero fill rule the holes are filled in; with the even-odd rule, as one compound path, the holes stay open.",
+    size: { wide: [640, 184], narrow: [336, 300] },
+    load: () => import("./demos/harmonic-type"),
+  },
+  "motion-techniques/shape-to-sound": {
+    title: "A contour spectrum becomes a tone",
+    summary:
+      "A circle and a star. For each, the magnitudes of its first 16 harmonics as bars, and one period of the tone those partials make. The circle has one strong partial and is nearly a sine wave; the star spreads its energy over many partials.",
+    size: { wide: [640, 214], narrow: [336, 296] },
+    load: () => import("./demos/shape-to-sound"),
+  },
+  "motion-techniques/independent-clocks": {
+    title: "A speed change on an accumulated clock",
+    summary:
+      "Speed changes from 1x to 3x at 2 s. Left, phase = speed times time: the phase jumps from 2 to 6 at the change. Right, phase += speed * dt: the phase only changes slope.",
+    size: { wide: [640, 200], narrow: [336, 336] },
+    load: () => import("./demos/independent-clocks"),
+  },
+  "motion-techniques/camera-curves": {
+    title: "Camera keyframes: linear, spline, monotone Hermite",
+    summary:
+      "One azimuth channel keyed at four stations with two holds. Linear has corners; a Catmull-Rom spline dips below the first key and above the second; a monotone Hermite curve stays between keys. A top view shows the camera orbiting a model along the monotone curve.",
+    size: { wide: [640, 190], narrow: [336, 330] },
+    load: () => import("./demos/camera-curves"),
+  },
+  "motion-techniques/tilt-shift": {
+    title: "A moving sharp band: miniature faking",
+    summary:
+      "A small town seen from above, blurred everywhere except one sharp horizontal band that moves down and back. A sharp and a blurred copy of the scene, with a mask hiding the blur inside the band.",
+    size: { wide: [640, 200], narrow: [336, 210] },
+    load: () => import("./demos/tilt-shift"),
+  },
+  "motion-techniques/blender-frames": {
+    title: "A scripted Blender animation, measured",
+    summary:
+      "A pipeline of four steps (bpy script, keyframe_insert, frame_set(n), render each frame) and a plot of the cube position at frames 1, 12, 24, 36 and 48: Bezier -2, -1.445, -0.064, 1.351, 2 against linear -2, -1.064, -0.043, 0.979, 2.",
+    size: { wide: [640, 232], narrow: [336, 356] },
+    load: () => import("./demos/blender-frames"),
+  },
 };

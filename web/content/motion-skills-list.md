@@ -61,6 +61,9 @@ The 2D video plugin from the third tutorial ([YyUP_hSovOg](https://www.youtube.c
 | [Seekable frame](technique-seekable-frame.md), [closed-form springs](technique-closed-form-springs.md), [beat grid](technique-beat-grid.md), [seamless loop](technique-seamless-loop.md), [subframe blur](technique-subframe-blur.md), [one shape](technique-one-shape.md) | The prompts flxrnc-251921, 0xnicc0-516612 and annacher-152174 in the Videos catalog of this site; HyperFrames' paused, seekable timeline is the closest framework fit |
 | [Kinetic type](technique-kinetic-type.md), [mask reveal](technique-mask-reveal.md), [misregistration](technique-misregistration.md), [locked message](technique-locked-message.md) | The prompt techhalla-498547 in the Videos catalog |
 | [Storyboard and pre-pass](technique-storyboard-first.md), [reference by link](technique-reference-by-link.md), [feedback passes](technique-feedback-passes.md) | The ИИ МАСТОДОНТ tutorial ([yEpN_s9UkAE](https://www.youtube.com/watch?v=yEpN_s9UkAE)); HyperFrames shows key frames before it renders |
+| [Independent clocks](technique-independent-clocks.md), [harmonic morph](technique-harmonic-morph.md), [harmonic type](technique-harmonic-type.md), [shape to sound](technique-shape-to-sound.md) | The owner's own curves project (private): its harmonic-shapes package and its notes on celestial motion and harmonic audio |
+| [Camera curves](technique-camera-curves.md), [tilt-shift band](technique-tilt-shift.md) | Our Tabletop Miniature style; the HyperFrames skills list Three.js and 3D keyframes among their adapters (read from the skill descriptions, not in detail) |
+| [Blender frames](technique-blender-frames.md) | The Blender manual and Python API; a locally installed Blender skill covers bpy, actions and F-curves, cameras, materials and linked libraries |
 
 ## Rules for taking from a skill
 

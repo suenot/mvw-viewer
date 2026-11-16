@@ -26,6 +26,7 @@
 .tq-prose a { text-decoration: underline; text-underline-offset: 2px; text-decoration-color: hsl(var(--muted-foreground) / 0.5); }
 .tq-prose a:hover { text-decoration-color: currentColor; }
 .tq-prose .dead { color: inherit; }
+.tq-prose :not(pre) > code { overflow-wrap: anywhere; }
 .tq-prose code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86em; background: hsl(var(--muted)); border-radius: 4px; padding: 0.1em 0.35em; }
 .tq-prose pre { overflow-x: auto; background: hsl(var(--muted)); border-radius: 8px; padding: 0.9rem 1rem; margin: 1rem 0; font-size: 0.82rem; line-height: 1.55; }
 .tq-prose pre code { background: none; padding: 0; font-size: inherit; }
