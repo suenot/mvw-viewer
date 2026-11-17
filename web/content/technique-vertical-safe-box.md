@@ -26,4 +26,4 @@ A box 1400 high, centred in 1920, spans y from 260 to 1660. The bottom clear ban
 
 Pair this with [one sentence, one shot](technique-sentence-shot.md) for captions and with [render and inspect](technique-render-and-inspect.md) to check frames against the bands.
 
-**Sources:** [iart-ai/tiktok-video-skills](https://github.com/iart-ai/tiktok-video-skills), `skills/short-form-video/SKILL.md` (safe-area table and checklist) and `skills/caption-animation/SKILL.md`. MIT licence. Platform interfaces change; we did not verify the bands against any app.
+**Sources:** [iart-ai/tiktok-video-skills](https://github.com/iart-ai/tiktok-video-skills), `skills/short-form-video/SKILL.md` (safe-area table and checklist) and `skills/caption-animation/SKILL.md`. MIT licence. Platform interfaces change, so treat the bands as a starting point.

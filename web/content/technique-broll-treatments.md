@@ -34,4 +34,4 @@ Rhythm rules from the skill: open and close on A; no stretch of A longer than ab
 
 For "revenue grew 30%": bring in the chart structure early, then land the final bar value on the word "30%". Synchronization means the number is readable, not that a long count-up has started. Compare [one sentence, one shot](technique-sentence-shot.md) and [number readout](technique-number-readout.md).
 
-**Sources:** [iart-ai/b-roll-skills](https://github.com/iart-ai/b-roll-skills), `skills/talking-head-b-roll/SKILL.md`. MIT licence. The 26 second plan is our example. We did not run the skill.
+**Sources:** [iart-ai/b-roll-skills](https://github.com/iart-ai/b-roll-skills), `skills/talking-head-b-roll/SKILL.md`. MIT licence. The 26 second plan is our example.

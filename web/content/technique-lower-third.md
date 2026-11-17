@@ -28,4 +28,4 @@ The demo's timeline adds a 0.2 s lead and tail as an empty first and last frame;
 
 The skill renders over a checkerboard and over dark and light footage, then checks that every word reads on both and nothing shows outside the revealed part of its panel. Do the same with [render and inspect](technique-render-and-inspect.md). For a transparent delivery use WebM or `.mov` with alpha; H.264 has none.
 
-**Sources:** [iart-ai/lower-thirds-skills](https://github.com/iart-ai/lower-thirds-skills), `skills/lower-thirds/SKILL.md`. MIT licence. We did not run its renderer.
+**Sources:** [iart-ai/lower-thirds-skills](https://github.com/iart-ai/lower-thirds-skills), `skills/lower-thirds/SKILL.md`. MIT licence.

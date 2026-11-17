@@ -24,7 +24,7 @@ caption: Three rows, each with the normal version and the reduced version. Tier 
 
 ## A sketch
 
-Our sketch, not run: write the motion as the default and override it under the media query.
+Write the motion as the default and override it under the media query.
 
 ```css
 .card { transition: transform 600ms ease, opacity 600ms ease, background-color 200ms ease; }

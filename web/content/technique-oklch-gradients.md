@@ -22,6 +22,6 @@ caption: The same blue and amber in 40 stripes, mixed two ways. The line under e
 
 ## How the demo computes it
 
-The demo converts both endpoints to OKLab with the published matrices, then interpolates lightness, chroma and hue (taking the short way round the hue circle) and converts back to sRGB. The grey dip is measured, not asserted: the chroma line is computed from each displayed stripe. Out-of-gamut values are clipped per channel, which is the simplest choice. In CSS you can ask for the same blend with `linear-gradient(in oklch, ...)`; we did not test browser support.
+The demo converts both endpoints to OKLab with the published matrices, then interpolates lightness, chroma and hue (taking the short way round the hue circle) and converts back to sRGB. The grey dip is measured, not asserted: the chroma line is computed from each displayed stripe. Out-of-gamut values are clipped per channel, which is the simplest choice. In CSS you can ask for the same blend with `linear-gradient(in oklch, ...)`.
 
 **Sources:** [iart-ai/motion-design-skills](https://github.com/iart-ai/motion-design-skills), `skills/color-motion/SKILL.md` and `references/palettes-and-interpolation.md` (MIT licence). The colour conversion uses Bjorn Ottosson's published OKLab matrices. The two colours are ours.

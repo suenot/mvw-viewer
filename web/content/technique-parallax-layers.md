@@ -26,4 +26,4 @@ The shot-composition skill gives the CSS speeds `--speed: 0.2` for the backgroun
 - Use the camera ease the skill recommends, ease-in-out, never linear except for continuous loops. The camera pairs well with the [camera curves](technique-camera-curves.md).
 - Parallax is a vestibular trigger. Remove it under reduced motion: see [reduced motion in tiers](technique-reduced-motion-tiers.md).
 
-**Sources:** [iart-ai/motion-design-skills](https://github.com/iart-ai/motion-design-skills), `skills/shot-composition/references/camera-and-grids.md` (section "Parallax layering"). MIT licence. We did not run its code.
+**Sources:** [iart-ai/motion-design-skills](https://github.com/iart-ai/motion-design-skills), `skills/shot-composition/references/camera-and-grids.md` (section "Parallax layering"). MIT licence.

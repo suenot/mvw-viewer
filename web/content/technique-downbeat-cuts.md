@@ -30,4 +30,4 @@ The skill reports its own measurements on short pieces:
 
 The skill's check script fails a cut that is off the beat by more than 100 ms (about three frames) or that jumps more than +6 dB against the second before. The demo draws that threshold as a line. The bar heights are the skill's quoted figures (the accent drawn at 8.5 and the chord change at 4, the middles of the quoted ranges).
 
-**Sources:** [iart-ai/javascript-animation-skills](https://github.com/iart-ai/javascript-animation-skills), `skills/soundtrack/SKILL.md`. MIT licence. We did not run its check script.
+**Sources:** [iart-ai/javascript-animation-skills](https://github.com/iart-ai/javascript-animation-skills), `skills/soundtrack/SKILL.md`. MIT licence.

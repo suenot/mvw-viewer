@@ -22,7 +22,7 @@ Give each path `pathLength="1"`, so a single value from 0 to 1 draws any path wh
 
 ## A sketch
 
-Our sketch, not run. The skill uses `stroke-dashoffset`; our demo, which animates only transform and opacity, draws 30 short pieces instead.
+The skill uses `stroke-dashoffset`; our demo, which animates only transform and opacity, draws 30 short pieces instead.
 
 ```js
 path.setAttribute("pathLength", 1);

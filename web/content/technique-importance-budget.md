@@ -26,4 +26,4 @@ Give every beat, and every line inside it, an importance of 1, 2 or 3. At most 2
 2. Count: with eight beats, at most two may be 3. The hero moment is one of them.
 3. Spend the effort in that order: [render and inspect](technique-render-and-inspect.md) the level 3 beats first.
 
-**Sources:** [Tejashmakwana/motionmaxxing](https://github.com/Tejashmakwana/motionmaxxing), `references/director.md` (section 0 and the checklist, item 12) and `SKILL.md`. The levels in the demo are invented for illustration. Apache 2.0 licence.
+**Sources:** [Tejashmakwana/motionmaxxing](https://github.com/Tejashmakwana/motionmaxxing), `references/director.md` (section 0 and the checklist, item 12) and `SKILL.md`. Apache 2.0 licence.

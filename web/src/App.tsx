@@ -84,7 +84,7 @@ function Details(props: { item: any }) {
   );
 }
 
-const TABS = [["#/", "Videos"], ["#/techniques", "Techniques"], ["#/skills", "Skills"]] as const;
+const TABS = [["#/", "Videos"], ["#/techniques", "Techniques"], ["#/skills", "Skills"], ["#/ai", "For AI"]] as const;
 
 function useRoute() {
   const read = () => location.hash.replace(/^#\/?/, "/") || "/";

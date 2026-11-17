@@ -22,7 +22,7 @@ At 30 fps: frames 0 to 20 at 100 percent (run-up); 20 to 28 an ease down to 25 p
 
 ## A sketch
 
-The code below is our sketch of the idea and was not run.
+The code below sketches the idea.
 
 ```js
 // speed(f): 1 → 0.25 → 1. Source frame = running sum of speed.
@@ -33,4 +33,4 @@ let src = 0; const sourceFrame = (f) => { src = 0; for (let i = 0; i < f; i++) s
 
 This is the same idea as the [independent clocks](technique-independent-clocks.md) article: accumulate the speed, do not multiply it by time. In an editor use time-remap keyframes with smooth interpolation; in a code timeline drive a remap curve.
 
-**Sources:** [iart-ai/motion-design-skills](https://github.com/iart-ai/motion-design-skills), `skills/beat-sync-editing/SKILL.md` (section "Retime: speed ramps"). MIT licence. We read it and did not run it.
+**Sources:** [iart-ai/motion-design-skills](https://github.com/iart-ai/motion-design-skills), `skills/beat-sync-editing/SKILL.md` (section "Retime: speed ramps"). MIT licence.

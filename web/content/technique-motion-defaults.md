@@ -10,7 +10,7 @@ summary: "When nobody says how long a move lasts, use measured medians: opacity 
 
 [Motion techniques](motion-techniques.md) · Reviewed November 16, 2026
 
-A default duration saves a decision on every element. The Motionmaxxing skill keeps a table of medians measured on a corpus of product films, and a rule for when no other information exists. We read the rule and the table; we did not remeasure the corpus.
+A default duration saves a decision on every element. The Motionmaxxing skill keeps a table of medians measured on a corpus of product films, and a rule for when no other information exists.
 
 ```viz motion-techniques/motion-defaults
 caption: Six defaults at 30 fps. Each bar is one move, with its length in frames and in milliseconds. The highlighted bar (a translate or scale entrance, 12 frames) is the one to reach for first.

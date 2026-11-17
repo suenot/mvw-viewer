@@ -9,6 +9,7 @@ const out = new URL("../src/techniques/content.generated.json", import.meta.url)
 const route = (file) => {
   if (file === "motion-techniques.md") return "#/techniques";
   if (file === "motion-skills-list.md") return "#/skills";
+  if (file === "ai-access.md") return "#/ai";
   const m = file.match(/^technique-(.+)\.md$/);
   return m ? `#/techniques/${m[1]}` : null;
 };
