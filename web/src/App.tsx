@@ -1,5 +1,5 @@
 import { For, Show, Suspense, createEffect, createMemo, createResource, createSignal, lazy, onCleanup, onMount } from "solid-js";
-import { loadItems, loadText, url } from "./lib";
+import { loadFull, loadItem, loadItems, loadText, url } from "./lib";
 
 const Pages = lazy(() => import("./techniques/Pages")); // techniques + skills pages: own chunk, not loaded with the catalog
 
@@ -9,8 +9,10 @@ const ALL = "__all__";
 const PAGE = 48; // cards per step; more load as the page end comes near
 const sources = (i: any): string[] => i.source.split(" + ");
 // The lower-cased text a search looks in, built once per item (the prompts are about 600 KB in all).
+// The list holds no prompts; they come with the full catalog, loaded when the user starts to search, as a map by id.
 const hay = new WeakMap<object, string>();
-const haystack = (i: any) => { let h = hay.get(i); if (h === undefined) { h = [i.title, i.author, i.prompt, i.id].join(" ").toLowerCase(); hay.set(i, h); } return h; };
+const haystack = (i: any) => { let h = hay.get(i); if (h === undefined) { h = [i.title, i.author, i.id].join(" ").toLowerCase(); hay.set(i, h); } return h; };
+const hasPrompt = (i: any) => ("p" in i ? !!i.p : !!i.prompt);
 
 const field = "h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring";
 const btn = "inline-flex h-8 items-center rounded-md border border-input bg-background px-3 text-sm hover:bg-accent";
@@ -67,7 +69,7 @@ function LazyDoc(props: { title: string; href: string }) {
   );
 }
 
-function Details(props: { item: any }) {
+function Details(props: { item: any; pending?: boolean }) {
   const link = (href?: string, text?: string) => href && <a class="underline underline-offset-2" href={href} target="_blank" rel="noreferrer">{text}</a>;
   return (
     <div class="mt-2 space-y-4">
@@ -87,6 +89,7 @@ function Details(props: { item: any }) {
           )}
         </For>
       </div>
+      <Show when={props.pending}><p class="text-sm text-muted-foreground">Loading the prompt…</p></Show>
       <Show when={props.item.prompt}>
         <div>
           <button class={btn} onClick={() => navigator.clipboard.writeText(props.item.prompt)}>Copy prompt</button>
@@ -95,6 +98,19 @@ function Details(props: { item: any }) {
       </Show>
       <Show when={props.item.how}><LazyDoc title="How it was made (full page)" href={props.item.how} /></Show>
       <Show when={props.item.style_doc}><LazyDoc title="Style recipe" href={props.item.style_doc} /></Show>
+    </div>
+  );
+}
+
+// The card gives the slim item at once; the full one (prompt, links) arrives a moment later.
+function Detail(props: { item: any; onClose: () => void }) {
+  const [full] = createResource(() => props.item, loadItem);
+  const item = () => (full.error ? props.item : full() ?? props.item);
+  return (
+    <div class="relative p-5">
+      <h2 class="pr-8 text-lg font-semibold">{props.item.title || props.item.id}</h2>
+      <button class="absolute right-4 top-4 opacity-70 hover:opacity-100" aria-label="Close" onClick={props.onClose}>✕</button>
+      <Details item={item()} pending={full.loading && !!props.item.p} />
     </div>
   );
 }
@@ -134,6 +150,14 @@ export default function App() {
   let qTimer: ReturnType<typeof setTimeout> | undefined;
   onCleanup(() => clearTimeout(qTimer));
   createEffect(() => { const v = q(); clearTimeout(qTimer); qTimer = setTimeout(() => setQd(v), 150); });
+  // Prompts for the search: the full catalog is fetched once, the first time the search box gets focus.
+  const [prompts, setPrompts] = createSignal<Map<string, string> | null>(null);
+  let wantPrompts = false;
+  const preparePrompts = () => {
+    if (wantPrompts) return;
+    wantPrompts = true;
+    loadFull().then((all) => setPrompts(new Map(all.map((i: any) => [i.id, (i.prompt || "").toLowerCase()])))).catch(() => { wantPrompts = false; });
+  };
   const [src, setSrc] = createSignal(ALL);
   const [cat, setCat] = createSignal(ALL);
   const [withPrompt, setWithPrompt] = createSignal(false);
@@ -149,8 +173,8 @@ export default function App() {
   const list = createMemo(() => {
     const t = qd().trim().toLowerCase();
     return items().filter((i) =>
-      (src() === ALL || sources(i).includes(src())) && (cat() === ALL || i.category === cat()) && (!withPrompt() || i.prompt) &&
-      (!t || haystack(i).includes(t)));
+      (src() === ALL || sources(i).includes(src())) && (cat() === ALL || i.category === cat()) && (!withPrompt() || hasPrompt(i)) &&
+      (!t || haystack(i).includes(t) || !!prompts()?.get(i.id)?.includes(t)));
   });
 
   return (
@@ -165,7 +189,7 @@ export default function App() {
         </nav>
         <Show when={videos()}><>
         <input
-          value={q()} onInput={(e) => setQ(e.currentTarget.value)} placeholder="Search title, author, prompt…"
+          value={q()} onInput={(e) => { setQ(e.currentTarget.value); preparePrompts(); }} onFocus={preparePrompts} placeholder="Search title, author, prompt…"
           class={`${field} min-w-[200px] flex-1`}
         />
         <select class={`${field} select min-w-[10rem]`} value={src()} onChange={(e) => setSrc(e.currentTarget.value)}>
@@ -211,13 +235,7 @@ export default function App() {
         class="m-auto max-h-[92vh] w-[min(1100px,95vw)] overflow-y-auto rounded-lg border bg-background p-0 text-foreground shadow-lg backdrop:bg-black/70"
       >
         <Show when={open()} keyed>
-          {(item) => (
-            <div class="relative p-5">
-              <h2 class="pr-8 text-lg font-semibold">{item.title || item.id}</h2>
-              <button class="absolute right-4 top-4 opacity-70 hover:opacity-100" aria-label="Close" onClick={() => setOpen(null)}>✕</button>
-              <Details item={item} />
-            </div>
-          )}
+          {(item) => <Detail item={item} onClose={() => setOpen(null)} />}
         </Show>
       </dialog>
     </div>
