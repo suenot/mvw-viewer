@@ -36,3 +36,10 @@
   }
   .select:hover { @apply bg-accent; }
 }
+
+/* Static shell shown before the script runs, and the skeleton cards while the catalog loads. */
+.boot-bar { display: flex; align-items: center; height: 3.4rem; padding: 0 1rem; border-bottom: 1px solid hsl(var(--border)); font-size: 1rem; }
+.boot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.75rem; padding: 1rem; }
+.boot-grid > i, .skel { display: block; aspect-ratio: 16 / 12.5; border-radius: 0.5rem; background: hsl(var(--muted)); animation: skel-pulse 1.4s ease-in-out infinite; }
+@keyframes skel-pulse { 50% { opacity: 0.45; } }
+@media (prefers-reduced-motion: reduce) { .boot-grid > i, .skel { animation: none; } }

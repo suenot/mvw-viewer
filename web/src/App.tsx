@@ -1,4 +1,4 @@
-import { For, Show, createEffect, createMemo, createResource, createSignal, lazy, onCleanup } from "solid-js";
+import { For, Show, Suspense, createEffect, createMemo, createResource, createSignal, lazy, onCleanup, onMount } from "solid-js";
 import { loadItems, loadText, url } from "./lib";
 
 const Pages = lazy(() => import("./techniques/Pages")); // techniques + skills pages: own chunk, not loaded with the catalog
@@ -6,8 +6,11 @@ const Pages = lazy(() => import("./techniques/Pages")); // techniques + skills p
 const WORKSPACE = "https://github.com/suenot/motion-videos-warehouse"; // root repo; every source repo is a git submodule of it
 
 const ALL = "__all__";
-const PAGE = 120;
+const PAGE = 48; // cards per step; more load as the page end comes near
 const sources = (i: any): string[] => i.source.split(" + ");
+// The lower-cased text a search looks in, built once per item (the prompts are about 600 KB in all).
+const hay = new WeakMap<object, string>();
+const haystack = (i: any) => { let h = hay.get(i); if (h === undefined) { h = [i.title, i.author, i.prompt, i.id].join(" ").toLowerCase(); hay.set(i, h); } return h; };
 
 const field = "h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring";
 const btn = "inline-flex h-8 items-center rounded-md border border-input bg-background px-3 text-sm hover:bg-accent";
@@ -18,16 +21,28 @@ const GithubIcon = () => (
   </svg>
 );
 
+// A card is a lazy poster image. The video element exists only while the pointer is over the card, so a page of
+// 48 cards makes no video requests and only the posters near the viewport are fetched.
 function Card(props: { item: any; onOpen: (i: any) => void }) {
   const src = () => props.item.videos.original;
+  const [live, setLive] = createSignal(false);
+  let vid: HTMLVideoElement | undefined;
   return (
     <button
       onClick={() => props.onOpen(props.item)}
       class="group overflow-hidden rounded-lg border bg-card text-left transition-colors hover:border-ring"
-      onMouseEnter={(e) => { const v = e.currentTarget.querySelector("video"); if (v && src()) { if (!v.src) v.src = url(src()); v.play().catch(() => {}); } }}
-      onMouseLeave={(e) => e.currentTarget.querySelector("video")?.pause()}
+      style={{ "content-visibility": "auto", "contain-intrinsic-size": "auto 230px" }}
+      onMouseEnter={() => { if (src()) { setLive(true); queueMicrotask(() => vid?.play().catch(() => {})); } }}
+      onMouseLeave={() => setLive(false)}
     >
-      <video class="aspect-video w-full bg-black object-cover" poster={url(props.item.poster)} muted loop playsinline preload="none" />
+      <div class="relative aspect-video w-full bg-black">
+        <Show when={props.item.poster}>
+          <img src={url(props.item.poster)} alt="" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+        </Show>
+        <Show when={live()}>
+          <video ref={vid} src={url(src())} class="absolute inset-0 h-full w-full bg-black object-cover" muted loop playsinline />
+        </Show>
+      </div>
       <div class="p-3">
         <div class="truncate text-sm font-medium">{props.item.title || props.item.id}</div>
         <div class="truncate text-xs text-muted-foreground">
@@ -66,7 +81,7 @@ function Details(props: { item: any }) {
         <For each={Object.entries(props.item.videos) as [string, string][]} fallback={<i class="text-sm text-muted-foreground">no video</i>}>
           {([name, u]) => (
             <figure class="min-w-[260px] flex-1">
-              <video src={url(u)} controls loop playsinline autoplay={name === "original"} muted={name === "original"} class="w-full rounded-md bg-black" />
+              <video src={url(u)} controls loop playsinline preload={name === "original" ? "auto" : "metadata"} autoplay={name === "original"} muted={name === "original"} class="w-full rounded-md bg-black" />
               <figcaption class="mt-1 text-xs text-muted-foreground">{name}</figcaption>
             </figure>
           )}
@@ -82,6 +97,18 @@ function Details(props: { item: any }) {
       <Show when={props.item.style_doc}><LazyDoc title="Style recipe" href={props.item.style_doc} /></Show>
     </div>
   );
+}
+
+// Loads the next step when the end of the list nears the viewport; the button stays as a fallback.
+function More(props: { onMore: () => void; left: number }) {
+  let el!: HTMLDivElement;
+  onMount(() => {
+    if (!("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver((e) => e[0].isIntersecting && props.onMore(), { rootMargin: "800px" });
+    io.observe(el);
+    onCleanup(() => io.disconnect());
+  });
+  return <div ref={el} class="flex justify-center pb-8"><button class={btn} onClick={props.onMore}>Show more ({props.left})</button></div>;
 }
 
 const TABS = [["#/", "Videos"], ["#/techniques", "Techniques"], ["#/skills", "Skills"], ["#/ai", "For AI"]] as const;
@@ -100,9 +127,13 @@ export default function App() {
   const route = useRoute();
   const videos = () => route() === "/";
   const tab = (href: string) => (href === "#/" ? videos() : route() === href.slice(1) || route().startsWith(href.slice(1) + "/"));
-  const [data] = createResource<any[]>(loadItems);
+  const [data, { refetch }] = createResource<any[]>(loadItems);
   const items = () => (data.error ? [] : data() ?? []); // reading data() of a failed resource throws
-  const [q, setQ] = createSignal("");
+  const [q, setQ] = createSignal(""); // what the search box shows
+  const [qd, setQd] = createSignal(""); // what filters, one beat later, so typing stays smooth
+  let qTimer: ReturnType<typeof setTimeout> | undefined;
+  onCleanup(() => clearTimeout(qTimer));
+  createEffect(() => { const v = q(); clearTimeout(qTimer); qTimer = setTimeout(() => setQd(v), 150); });
   const [src, setSrc] = createSignal(ALL);
   const [cat, setCat] = createSignal(ALL);
   const [withPrompt, setWithPrompt] = createSignal(false);
@@ -110,16 +141,16 @@ export default function App() {
   const [open, setOpen] = createSignal<any>(null);
   let dlg!: HTMLDialogElement;
 
-  createEffect(() => { q(); src(); cat(); withPrompt(); setShown(PAGE); });
+  createEffect(() => { qd(); src(); cat(); withPrompt(); setShown(PAGE); });
   createEffect(() => { if (open()) { if (!dlg.open) dlg.showModal(); } else if (dlg.open) dlg.close(); });
 
   const srcOptions = createMemo(() => [...new Set(items().flatMap(sources))].sort());
   const catOptions = createMemo(() => [...new Set(items().map((i) => i.category).filter(Boolean))].sort());
   const list = createMemo(() => {
-    const t = q().trim().toLowerCase();
+    const t = qd().trim().toLowerCase();
     return items().filter((i) =>
       (src() === ALL || sources(i).includes(src())) && (cat() === ALL || i.category === cat()) && (!withPrompt() || i.prompt) &&
-      (!t || [i.title, i.author, i.prompt, i.id].join(" ").toLowerCase().includes(t)));
+      (!t || haystack(i).includes(t)));
   });
 
   return (
@@ -155,15 +186,22 @@ export default function App() {
           <GithubIcon />
         </a>
       </header>
-      <Show when={!videos()}><Pages route={"#" + route()} /></Show>
+      <Show when={!videos()}><Suspense fallback={<p class="p-6 text-sm text-muted-foreground">Loading…</p>}><Pages route={"#" + route()} /></Suspense></Show>
       <Show when={videos()}><>
-      <Show when={data.loading}><p class="p-4 text-sm text-muted-foreground">Loading catalog…</p></Show>
-      <Show when={data.error}><p class="p-4 text-sm text-red-500">{String(data.error)}</p></Show>
+      <Show when={data.loading && !items().length}>
+        <div class="boot-grid" aria-busy="true" aria-label="Loading the catalog"><For each={Array.from({ length: 12 })}>{() => <i />}</For></div>
+      </Show>
+      <Show when={data.error}>
+        <div class="p-6 text-sm" role="alert">
+          <p class="mb-3">The catalog did not load. Check the connection and try again.</p>
+          <button class={btn} onClick={() => refetch()}>Try again</button>
+        </div>
+      </Show>
       <main class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3 p-4">
         <For each={list().slice(0, shown())}>{(i) => <Card item={i} onOpen={setOpen} />}</For>
       </main>
       <Show when={shown() < list().length}>
-        <div class="flex justify-center pb-8"><button class={btn} onClick={() => setShown((n) => n + PAGE)}>Show more ({list().length - shown()})</button></div>
+        <More onMore={() => setShown((n) => n + PAGE)} left={list().length - shown()} />
       </Show>
       </>
       </Show>
